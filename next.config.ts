@@ -3,6 +3,8 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   // App 100% dinâmico e por usuário (sessão via cookie): o modelo de cache
   // clássico é suficiente e mais simples que Cache Components aqui.
+  // Indicador do modo dev no canto direito (não cobre o menu lateral).
+  devIndicators: { position: "bottom-right" },
   turbopack: {
     rules: {
       "*.css": {

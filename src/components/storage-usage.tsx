@@ -24,18 +24,22 @@ export function StorageUsage({ bytes, files, limit }: { bytes: number; files: nu
       <button
         type="button"
         onClick={() => setOpen(true)}
-        className="group flex h-9 items-center gap-2 rounded-full px-3 text-meta text-muted transition-colors hover:bg-surface-2 hover:text-text"
+        className="group flex w-full flex-col gap-2 rounded-[var(--radius-control)] px-3 py-2.5 text-left text-meta text-muted transition-colors hover:bg-surface-2 hover:text-text"
         aria-label={`Armazenamento: ${formatBytes(shown)} de ${formatBytes(limit)} usados`}
       >
-        <HardDrive className="size-4" strokeWidth={2} />
-        <span className="hidden tabular-nums sm:inline">
-          {formatBytes(shown)} <span className="text-muted/70">/ {formatBytes(limit)}</span>
+        <span className="flex items-center gap-2">
+          <HardDrive className="size-4" strokeWidth={2} />
+          <span className="font-semibold text-text">Armazenamento</span>
+          <span className="ml-auto tabular-nums">{pct}%</span>
         </span>
-        <span className="relative h-1.5 w-12 overflow-hidden rounded-full bg-surface-2 group-hover:bg-border max-sm:hidden">
+        <span className="relative h-1.5 w-full overflow-hidden rounded-full bg-surface-2 group-hover:bg-border">
           <span
             className={cn("absolute inset-y-0 left-0 rounded-full", warn ? "bg-status-agendado" : "bg-accent")}
-            style={{ width: `${Math.max(pct, shown > 0 ? 4 : 0)}%` }}
+            style={{ width: `${Math.max(pct, shown > 0 ? 3 : 0)}%` }}
           />
+        </span>
+        <span className="tabular-nums">
+          {formatBytes(shown)} de {formatBytes(limit)}
         </span>
       </button>
 

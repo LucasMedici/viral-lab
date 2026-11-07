@@ -59,8 +59,8 @@ export function VideoDetail({ video, justUploaded }: { video: DetailVideo; justU
   }, [justUploaded]);
 
   return (
-    <div className="grid gap-10 lg:grid-cols-[21rem_minmax(0,1fr)]">
-      <aside className="flex flex-col gap-4">
+    <div className="grid gap-10 xl:grid-cols-[21rem_minmax(0,1fr)]">
+      <aside className="flex w-full max-w-sm flex-col gap-4 xl:max-w-none">
         <Preview video={video} />
         <FileActions video={video} formRef={formRef} onDelete={() => setAskDelete("manual")} />
       </aside>

@@ -124,8 +124,8 @@ export function UploadForm({ accounts, defaultAccountId }: { accounts: AccountOp
   const selected = accounts.find((a) => a.id === accountId);
 
   return (
-    <form onSubmit={onSubmit} className="grid gap-10 lg:grid-cols-[19rem_minmax(0,1fr)]">
-      <div className="flex flex-col gap-5">
+    <form onSubmit={onSubmit} className="grid gap-10 xl:grid-cols-[19rem_minmax(0,1fr)]">
+      <div className="flex w-full max-w-sm flex-col gap-5 xl:max-w-none">
         <Field label="Conta" htmlFor="account" error={errors.account}>
           <Select id="account" value={accountId} onChange={(e) => setAccountId(e.target.value)} disabled={locked} required>
             <option value="" disabled>Escolha a conta</option>

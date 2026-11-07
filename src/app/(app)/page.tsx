@@ -25,7 +25,7 @@ export default async function AccountsPage({ searchParams }: PageProps<"/">) {
   if (total.length === 0) return <EmptyState />;
 
   return (
-    <div className="grid gap-12 lg:grid-cols-[minmax(0,1fr)_20rem]">
+    <div className="grid gap-12 xl:grid-cols-[minmax(0,1fr)_19rem]">
       <section aria-labelledby="contas-titulo" className="min-w-0">
         <div className="mb-8 flex flex-wrap items-end justify-between gap-4">
           <div>
@@ -72,7 +72,7 @@ export default async function AccountsPage({ searchParams }: PageProps<"/">) {
         )}
       </section>
 
-      <aside aria-labelledby="proximas-titulo" className="lg:pt-[7.25rem]">
+      <aside aria-labelledby="proximas-titulo" className="xl:pt-[7.25rem]">
         <h2 id="proximas-titulo" className="mb-4 font-display text-card font-bold">Próximas publicações</h2>
         <UpcomingList overdue={upcoming.overdue} upcoming={upcoming.upcoming} />
       </aside>

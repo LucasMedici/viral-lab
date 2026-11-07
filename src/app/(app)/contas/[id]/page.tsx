@@ -63,7 +63,7 @@ export default async function AccountPage({ params, searchParams }: PageProps<"/
         </div>
       </header>
 
-      <div className="grid gap-10 xl:grid-cols-[minmax(0,1fr)_17rem]">
+      <div className="grid gap-10 2xl:grid-cols-[minmax(0,1fr)_17rem]">
         <section aria-label="Calendário" className="flex min-w-0 flex-col gap-4">
           <CalendarToolbar base={`/contas/${account.id}`} view={view} anchor={anchor} today={today} />
           {view === "mes" ? (
@@ -87,7 +87,7 @@ export default async function AccountPage({ params, searchParams }: PageProps<"/
               </Link>
             </p>
           ) : (
-            <ul className="flex flex-col gap-2">
+            <ul className="grid gap-2 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-1">
               {unscheduled.map((v) => (
                 <li key={v.id}>
                   <Link
