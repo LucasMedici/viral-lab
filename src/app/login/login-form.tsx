@@ -18,9 +18,9 @@ export function LoginForm({ next }: { next: string }) {
         <Input id="password" name="password" type="password" autoComplete="current-password" required />
       </Field>
       {state && !state.ok && (
-        <p role="alert" className="text-sm text-danger">{state.error}</p>
+        <p role="alert" className="text-meta text-danger">{state.error}</p>
       )}
-      <Button type="submit" disabled={pending} className="mt-2 w-full">
+      <Button type="submit" variant="primary" disabled={pending} className="mt-2 w-full">
         {pending ? "Entrando…" : "Entrar"}
       </Button>
     </form>

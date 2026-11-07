@@ -6,20 +6,20 @@ import { useSyncExternalStore } from "react";
 import { cn } from "@/lib/utils";
 
 const OPTIONS = [
-  { value: "light", label: "Tema claro", Icon: Sun },
   { value: "dark", label: "Tema escuro", Icon: Moon },
+  { value: "light", label: "Tema claro", Icon: Sun },
   { value: "system", label: "Seguir o sistema", Icon: Monitor },
 ] as const;
 
 const subscribe = () => () => {};
 
-export function ThemeToggle() {
+export function ThemeToggle({ className }: { className?: string }) {
   const { theme, setTheme } = useTheme();
-  // Evita divergência de hidratação: o tema só é conhecido no cliente.
+  // O tema só é conhecido no cliente; evita divergência de hidratação.
   const mounted = useSyncExternalStore(subscribe, () => true, () => false);
 
   return (
-    <div role="radiogroup" aria-label="Tema" className="flex items-center rounded-full border border-border bg-surface p-0.5">
+    <div role="radiogroup" aria-label="Tema" className={cn("flex items-center gap-0.5 rounded-full bg-surface-2 p-0.5", className)}>
       {OPTIONS.map(({ value, label, Icon }) => {
         const active = mounted && theme === value;
         return (
@@ -32,11 +32,11 @@ export function ThemeToggle() {
             title={label}
             onClick={() => setTheme(value)}
             className={cn(
-              "grid size-7 place-items-center rounded-full text-muted-foreground transition-colors hover:text-foreground",
-              active && "bg-surface-muted text-foreground",
+              "grid size-7 place-items-center rounded-full text-muted transition-colors hover:text-text",
+              active && "bg-surface text-text",
             )}
           >
-            <Icon className="size-3.5" />
+            <Icon className="size-3.5" strokeWidth={2} />
           </button>
         );
       })}

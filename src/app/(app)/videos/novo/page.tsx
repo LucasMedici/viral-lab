@@ -15,12 +15,12 @@ export default async function UploadPage({ searchParams }: PageProps<"/videos/no
   return (
     <div className="flex flex-col gap-8">
       <div>
-        <Link href={back} className="text-sm text-muted-foreground hover:text-foreground">Voltar</Link>
-        <h1 className="mt-2 font-display text-3xl font-bold tracking-tight">Enviar vídeo</h1>
+        <Link href={back} className="text-meta text-muted hover:text-text">Voltar</Link>
+        <h1 className="mt-2 font-display text-page font-bold">Enviar vídeo</h1>
       </div>
       {accounts.length === 0 ? (
         <div className="max-w-md">
-          <p className="text-muted-foreground">Para enviar um vídeo, cadastre antes a conta onde ele será publicado.</p>
+          <p className="text-muted">Para enviar um vídeo, cadastre antes a conta onde ele será publicado.</p>
           <ButtonLink href="/contas/nova" className="mt-6">Cadastrar conta</ButtonLink>
         </div>
       ) : (

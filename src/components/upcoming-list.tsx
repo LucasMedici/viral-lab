@@ -1,8 +1,8 @@
 import Link from "next/link";
 import { PlatformIcon } from "@/components/platform-icon";
-import { STATUS_DOT } from "@/components/status-badge";
-import type { Platform, VideoStatus } from "@/lib/constants";
-import { formatTz, dayKey, nowInTz } from "@/lib/dates";
+import { StatusDot } from "@/components/status-badge";
+import { STATUS_LABEL, type Platform, type VideoStatus } from "@/lib/constants";
+import { dayKey, formatTz, nowInTz } from "@/lib/dates";
 import { cn } from "@/lib/utils";
 
 type Item = {
@@ -26,16 +26,16 @@ function whenLabel(iso: string): string {
 export function UpcomingList({ overdue, upcoming }: { overdue: Item[]; upcoming: Item[] }) {
   if (!overdue.length && !upcoming.length) {
     return (
-      <p className="text-sm text-muted-foreground">
+      <p className="rounded-[var(--radius-card)] border border-dashed border-border px-4 py-6 text-meta text-muted">
         Nenhuma publicação agendada. Defina data e hora nos vídeos para vê-los aqui.
       </p>
     );
   }
   return (
-    <div className="flex flex-col gap-5">
+    <div className="flex flex-col gap-6">
       {overdue.length > 0 && (
         <div>
-          <h3 className="mb-2 text-sm font-medium text-danger">
+          <h3 className="mb-2 text-meta font-semibold text-danger">
             {overdue.length === 1 ? "1 vídeo passou da hora" : `${overdue.length} vídeos passaram da hora`}
           </h3>
           <Rows items={overdue} overdue />
@@ -48,22 +48,25 @@ export function UpcomingList({ overdue, upcoming }: { overdue: Item[]; upcoming:
 
 function Rows({ items, overdue = false }: { items: Item[]; overdue?: boolean }) {
   return (
-    <ol className="flex flex-col divide-y divide-border overflow-hidden rounded-[var(--radius-md)] border border-border bg-surface">
+    <ol className="flex flex-col divide-y divide-border overflow-hidden rounded-[var(--radius-card)] border border-border bg-surface">
       {items.map((v) => (
         <li key={v.id}>
-          <Link href={`/videos/${v.id}`} className="flex items-start gap-3 px-3 py-2.5 hover:bg-surface-muted">
-            <span className={cn("mt-1.5 size-2 shrink-0 rounded-full", STATUS_DOT[v.status])} aria-hidden="true" />
-            <span className="min-w-0 flex-1">
-              <span className={cn("block text-xs tabular-nums", overdue ? "text-danger" : "text-muted-foreground")}>
-                {v.scheduled_at ? whenLabel(v.scheduled_at) : ""}
-              </span>
-              <span className="block truncate text-sm font-medium">{v.title}</span>
+          <Link href={`/videos/${v.id}`} className="flex flex-col gap-1 px-4 py-3 transition-colors hover:bg-surface-2">
+            <span className={cn("text-meta tabular-nums", overdue ? "font-semibold text-danger" : "text-muted")}>
+              {v.scheduled_at ? whenLabel(v.scheduled_at) : ""}
+            </span>
+            <span className="truncate font-semibold">{v.title}</span>
+            <span className="flex items-center justify-between gap-2 text-meta text-muted">
               {v.account && (
-                <span className="mt-0.5 flex items-center gap-1 text-xs text-muted-foreground">
-                  <PlatformIcon platform={v.account.platform} className="size-3" />
+                <span className="flex min-w-0 items-center gap-1.5">
+                  <PlatformIcon platform={v.account.platform} className="size-3.5" />
                   <span className="truncate">@{v.account.username}</span>
                 </span>
               )}
+              <span className="inline-flex shrink-0 items-center gap-1.5">
+                <StatusDot status={v.status} />
+                {STATUS_LABEL[v.status]}
+              </span>
             </span>
           </Link>
         </li>

@@ -16,15 +16,15 @@ export function HashtagInput({ name, id, defaultValue = [] }: { name: string; id
   }
 
   return (
-    <div className="flex min-h-10 flex-wrap items-center gap-1.5 rounded-[var(--radius-md)] border border-border bg-surface px-2 py-1.5 focus-within:outline-2 focus-within:outline-ring">
+    <div className="flex min-h-10 flex-wrap items-center gap-1.5 rounded-[var(--radius-control)] border border-border bg-surface-2 px-2 py-1.5 transition-colors hover:border-muted/40 focus-within:outline-2 focus-within:outline-offset-2 focus-within:outline-accent">
       <input type="hidden" name={name} value={[...tags, ...parseHashtags(draft)].map((t) => `#${t}`).join(" ")} />
       {tags.map((t) => (
-        <span key={t} className="inline-flex items-center gap-1 rounded-full bg-primary/10 py-0.5 pl-2 pr-1 text-sm text-foreground">
+        <span key={t} className="inline-flex items-center gap-1 rounded-full border border-border bg-surface py-0.5 pl-2.5 pr-1 text-meta font-semibold text-text">
           #{t}
           <button
             type="button"
             onClick={() => setTags(tags.filter((x) => x !== t))}
-            className="grid size-4 place-items-center rounded-full text-muted-foreground hover:bg-primary/20 hover:text-foreground"
+            className="grid size-4 place-items-center rounded-full text-muted hover:bg-surface-2 hover:text-text"
             aria-label={`Remover #${t}`}
           >
             <X className="size-3" />
@@ -56,7 +56,7 @@ export function HashtagInput({ name, id, defaultValue = [] }: { name: string; id
         }}
         onBlur={() => draft.trim() && commit(draft)}
         placeholder={tags.length ? "" : "#receita #airfryer"}
-        className="min-w-24 flex-1 bg-transparent px-1 text-sm outline-none placeholder:text-muted-foreground/70"
+        className="min-w-24 flex-1 bg-transparent px-1 text-body outline-none placeholder:text-muted/70"
         autoCapitalize="none"
         spellCheck={false}
       />

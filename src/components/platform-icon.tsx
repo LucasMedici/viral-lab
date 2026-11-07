@@ -8,27 +8,14 @@ const PATHS: Record<Platform, string> = {
   instagram: siInstagram.path,
 };
 
-const COLORS: Record<Platform, string> = {
-  tiktok: "text-platform-tiktok",
-  youtube: "text-platform-youtube",
-  instagram: "text-platform-instagram",
-};
-
-export function PlatformIcon({
-  platform,
-  className,
-  colored = true,
-}: {
-  platform: Platform;
-  className?: string;
-  colored?: boolean;
-}) {
+/** Ícone da plataforma, sempre na cor do texto (docs/BRAND.md: sem cores fora da paleta). */
+export function PlatformIcon({ platform, className }: { platform: Platform; className?: string }) {
   return (
     <svg
       viewBox="0 0 24 24"
       role="img"
       aria-label={PLATFORM_LABEL[platform]}
-      className={cn("shrink-0 fill-current", !className?.includes("size-") && "size-5", colored && COLORS[platform], className)}
+      className={cn("shrink-0 fill-current", !className?.includes("size-") && "size-5", className)}
     >
       <path d={PATHS[platform]} />
     </svg>

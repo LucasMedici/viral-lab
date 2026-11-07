@@ -1,6 +1,1 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-  <!-- Favicon provisório do ViralLab: troque este arquivo quando a logo existir. -->
-  <rect width="64" height="64" rx="16" fill="#5b2ee0"/>
-  <rect x="21" y="12" width="22" height="40" rx="6" fill="none" stroke="#ffffff" stroke-width="4"/>
-  <circle cx="43" cy="44" r="8" fill="#e0457b" stroke="#5b2ee0" stroke-width="3"/>
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="512" height="512" role="img" aria-label="ViralLab"><rect width="120" height="120" rx="30" fill="#C5F23A"/><g transform="translate(60 60) scale(0.7) translate(-62 -60)"><path d="M56 30L56 90L104 60Z" fill="#85A32D" stroke="#85A32D" stroke-width="4" stroke-linejoin="round"/><path d="M38 30L38 90L86 60Z" fill="#4F5E21" stroke="#4F5E21" stroke-width="4" stroke-linejoin="round"/><path d="M20 30L20 90L68 60Z" fill="#0F0F14" stroke="#0F0F14" stroke-width="4" stroke-linejoin="round"/></g></svg>

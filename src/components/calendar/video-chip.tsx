@@ -1,26 +1,27 @@
 import Link from "next/link";
-import { STATUS_TINT } from "@/components/status-badge";
+import { STATUS_BLOCK } from "@/components/status-badge";
+import type { CalendarVideo } from "@/features/videos/queries";
 import { STATUS_LABEL } from "@/lib/constants";
 import { formatTz } from "@/lib/dates";
 import { cn } from "@/lib/utils";
-import type { CalendarVideo } from "@/features/videos/queries";
 
-export function VideoChip({ video, showTime = true, className }: { video: CalendarVideo; showTime?: boolean; className?: string }) {
+/** Bloco de vídeo no calendário: faixa na cor do status + nome do status por extenso. */
+export function VideoChip({ video, compact = false, className }: { video: CalendarVideo; compact?: boolean; className?: string }) {
   return (
     <Link
       href={`/videos/${video.id}`}
       title={`${video.title} (${STATUS_LABEL[video.status]})`}
       className={cn(
-        "block rounded-[var(--radius-sm)] border-l-[3px] px-1.5 py-1 text-xs leading-tight text-foreground transition-colors",
-        STATUS_TINT[video.status],
+        "flex flex-col gap-0.5 rounded-[6px] border-l-[3px] px-2 py-1.5 text-text transition-colors",
+        STATUS_BLOCK[video.status],
         className,
       )}
     >
-      {showTime && video.scheduled_at && (
-        <span className="mr-1 font-medium tabular-nums text-muted-foreground">{formatTz(video.scheduled_at, "HH:mm")}</span>
-      )}
-      <span className={cn(video.status === "publicado" && "text-muted-foreground")}>{video.title}</span>
-      <span className="sr-only">, {STATUS_LABEL[video.status]}</span>
+      <span className={cn("text-meta font-semibold leading-snug", compact ? "line-clamp-2" : "line-clamp-3")}>
+        {video.scheduled_at && <span className="mr-1 tabular-nums">{formatTz(video.scheduled_at, "HH:mm")}</span>}
+        <span className="font-normal">{video.title}</span>
+      </span>
+      <span className="text-[0.6875rem] leading-tight text-muted">{STATUS_LABEL[video.status]}</span>
     </Link>
   );
 }

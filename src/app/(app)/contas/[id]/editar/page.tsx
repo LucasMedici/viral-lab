@@ -12,10 +12,10 @@ export default async function EditAccountPage({ params }: PageProps<"/contas/[id
   if (!account) notFound();
   return (
     <div className="mx-auto max-w-2xl">
-      <Link href={`/contas/${account.id}`} className="text-sm text-muted-foreground hover:text-foreground">
+      <Link href={`/contas/${account.id}`} className="text-meta text-muted hover:text-text">
         {account.display_name}
       </Link>
-      <h1 className="mb-8 mt-2 font-display text-3xl font-bold tracking-tight">Editar conta</h1>
+      <h1 className="mb-8 mt-2 font-display text-page font-bold">Editar conta</h1>
       <AccountForm account={account} />
     </div>
   );

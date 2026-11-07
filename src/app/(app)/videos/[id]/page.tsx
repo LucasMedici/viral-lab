@@ -36,12 +36,12 @@ export default async function VideoPage({ params, searchParams }: PageProps<"/vi
   return (
     <div className="flex flex-col gap-8">
       <header>
-        <Link href={`/contas/${account.id}`} className="inline-flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground">
+        <Link href={`/contas/${account.id}`} className="inline-flex items-center gap-1.5 text-meta text-muted hover:text-text">
           <PlatformIcon platform={account.platform} className="size-3.5" />
           {account.display_name}
         </Link>
-        <h1 className="mt-2 font-display text-3xl font-bold leading-tight tracking-tight">{video.title}</h1>
-        <div className="mt-2 flex flex-wrap items-center gap-x-4 gap-y-1 text-sm text-muted-foreground">
+        <h1 className="mt-2 font-display text-page font-bold">{video.title}</h1>
+        <div className="mt-3 flex flex-wrap items-center gap-x-4 gap-y-2 text-muted">
           <StatusBadge status={video.status} />
           <span>
             {PLATFORM_FORMAT[account.platform]} de @{account.username}

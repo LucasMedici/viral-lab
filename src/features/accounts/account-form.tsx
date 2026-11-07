@@ -23,14 +23,14 @@ export function AccountForm({ account }: { account?: Account }) {
   return (
     <form action={formAction} className="flex flex-col gap-6">
       <fieldset className="flex flex-col gap-2">
-        <legend className="mb-2 text-sm font-medium">Plataforma</legend>
+        <legend className="mb-2 text-meta font-semibold">Plataforma</legend>
         <div className="grid grid-cols-3 gap-2">
           {PLATFORMS.map((p) => (
             <label
               key={p}
               className={cn(
-                "flex cursor-pointer items-center justify-center gap-2 rounded-[var(--radius-md)] border border-border bg-surface px-3 py-3 text-sm font-medium transition-colors hover:bg-surface-muted has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-ring",
-                platform === p && "border-primary bg-primary/8 ring-1 ring-primary",
+                "flex cursor-pointer items-center justify-center gap-2 rounded-[var(--radius-control)] border border-border bg-surface-2 px-3 py-3.5 font-semibold text-muted transition-colors hover:text-text has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-accent",
+                platform === p && "border-text bg-surface text-text",
               )}
             >
               <input
@@ -46,7 +46,7 @@ export function AccountForm({ account }: { account?: Account }) {
             </label>
           ))}
         </div>
-        {errors.platform && <p className="text-sm text-danger">{errors.platform}</p>}
+        {errors.platform && <p className="text-meta text-danger">{errors.platform}</p>}
       </fieldset>
 
       <div className="grid gap-5 sm:grid-cols-2">
@@ -62,7 +62,7 @@ export function AccountForm({ account }: { account?: Account }) {
         </Field>
         <Field label="Usuário" htmlFor="username" error={errors.username}>
           <div className="relative">
-            <span className="pointer-events-none absolute inset-y-0 left-3 grid place-items-center text-sm text-muted-foreground">
+            <span className="pointer-events-none absolute inset-y-0 left-3 grid place-items-center text-muted">
               @
             </span>
             <Input
@@ -90,11 +90,11 @@ export function AccountForm({ account }: { account?: Account }) {
       </Field>
 
       {state && !state.ok && !Object.keys(errors).length && (
-        <p role="alert" className="text-sm text-danger">{state.error}</p>
+        <p role="alert" className="text-meta text-danger">{state.error}</p>
       )}
 
       <div className="flex flex-wrap items-center gap-3">
-        <Button type="submit" disabled={pending}>
+        <Button type="submit" variant="primary" disabled={pending}>
           {pending ? "Salvando…" : account ? "Salvar alterações" : "Cadastrar conta"}
         </Button>
         <ButtonLink href={account ? `/contas/${account.id}` : "/"} variant="ghost">
@@ -116,7 +116,7 @@ function DeleteAccountButton({ accountId, className }: { accountId: string; clas
         Excluir conta
       </Button>
       <Dialog open={open} onClose={() => setOpen(false)} title="Excluir esta conta?">
-        <p className="text-sm text-muted-foreground">
+        <p className="text-meta text-muted">
           Só é possível excluir contas sem vídeos. Essa ação não pode ser desfeita.
         </p>
         <div className="flex justify-end gap-2">

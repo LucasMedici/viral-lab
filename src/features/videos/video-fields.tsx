@@ -64,9 +64,9 @@ export function VideoFields({
         </Field>
       </div>
       {suggestScheduled && (
-        <p className="-mt-2 flex flex-wrap items-center gap-2 text-sm text-muted-foreground">
+        <p className="-mt-2 flex flex-wrap items-center gap-2 text-meta text-muted">
           O vídeo tem data marcada.
-          <button type="button" onClick={() => setStatus("agendado")} className="font-medium text-primary underline-offset-4 hover:underline">
+          <button type="button" onClick={() => setStatus("agendado")} className="font-semibold text-link underline-offset-4 hover:underline">
             Marcar como agendado
           </button>
         </p>

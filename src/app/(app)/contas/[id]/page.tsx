@@ -43,27 +43,27 @@ export default async function AccountPage({ params, searchParams }: PageProps<"/
 
   return (
     <div className="flex flex-col gap-8">
-      <header className="flex flex-wrap items-start gap-4">
-        <span className="grid size-14 shrink-0 place-items-center rounded-[var(--radius-lg)] border border-border bg-surface">
+      <header className="flex flex-wrap items-center gap-4">
+        <span className="grid size-16 shrink-0 place-items-center rounded-[var(--radius-card)] bg-surface-2">
           <PlatformIcon platform={account.platform} className="size-7" />
         </span>
         <div className="min-w-0 flex-1">
-          <Link href="/" className="text-sm text-muted-foreground hover:text-foreground">Contas</Link>
-          <h1 className="font-display text-3xl font-bold leading-tight tracking-tight">{account.display_name}</h1>
-          <p className="text-sm text-muted-foreground">
+          <Link href="/" className="text-meta text-muted hover:text-text">Contas</Link>
+          <h1 className="font-display text-page font-bold">{account.display_name}</h1>
+          <p className="mt-1 text-muted">
             @{account.username} no {PLATFORM_LABEL[account.platform]}
             {account.niche ? `, ${account.niche}` : ""}
           </p>
         </div>
         <div className="flex w-full items-center gap-2 sm:w-auto">
-          <ButtonLink href={`/contas/${account.id}/editar`} variant="ghost" size="sm">Editar conta</ButtonLink>
-          <ButtonLink href={`/videos/novo?conta=${account.id}`} size="sm">
+          <ButtonLink href={`/contas/${account.id}/editar`} variant="secondary">Editar conta</ButtonLink>
+          <ButtonLink href={`/videos/novo?conta=${account.id}`} variant="primary">
             <Plus /> Enviar vídeo
           </ButtonLink>
         </div>
       </header>
 
-      <div className="grid gap-8 xl:grid-cols-[minmax(0,1fr)_17rem]">
+      <div className="grid gap-10 xl:grid-cols-[minmax(0,1fr)_17rem]">
         <section aria-label="Calendário" className="flex min-w-0 flex-col gap-4">
           <CalendarToolbar base={`/contas/${account.id}`} view={view} anchor={anchor} today={today} />
           {view === "mes" ? (
@@ -71,18 +71,18 @@ export default async function AccountPage({ params, searchParams }: PageProps<"/
           ) : (
             <WeekView days={days} todayKey={dayKey(today)} byDay={byDay} />
           )}
-          <StatusLegend className="text-xs" />
+          <StatusLegend />
         </section>
 
         <aside aria-labelledby="sem-data" className="flex flex-col gap-3">
           <div className="flex items-baseline justify-between">
-            <h2 id="sem-data" className="font-display text-lg font-semibold tracking-tight">Sem data</h2>
-            <span className="text-sm tabular-nums text-muted-foreground">{unscheduled.length}</span>
+            <h2 id="sem-data" className="font-display text-card font-bold">Sem data</h2>
+            <span className="grid h-6 min-w-6 place-items-center rounded-full bg-surface-2 px-2 text-meta font-semibold tabular-nums">{unscheduled.length}</span>
           </div>
           {unscheduled.length === 0 ? (
-            <p className="rounded-[var(--radius-md)] border border-dashed border-border px-4 py-6 text-sm text-muted-foreground">
+            <p className="rounded-[var(--radius-card)] border border-dashed border-border px-4 py-6 text-meta text-muted">
               Todo vídeo pendente já tem data.{" "}
-              <Link href={`/videos/novo?conta=${account.id}`} className="font-medium text-primary underline-offset-4 hover:underline">
+              <Link href={`/videos/novo?conta=${account.id}`} className="font-semibold text-link underline-offset-4 hover:underline">
                 Enviar outro vídeo
               </Link>
             </p>
@@ -92,12 +92,12 @@ export default async function AccountPage({ params, searchParams }: PageProps<"/
                 <li key={v.id}>
                   <Link
                     href={`/videos/${v.id}`}
-                    className="flex flex-col gap-1 rounded-[var(--radius-md)] border border-border bg-surface px-3 py-2.5 transition-colors hover:border-primary/50"
+                    className="flex flex-col gap-2.5 rounded-[var(--radius-card)] border border-border bg-surface p-3.5 transition-colors hover:border-muted/50"
                   >
-                    <span className="line-clamp-2 text-sm font-medium">{v.title}</span>
+                    <span className="line-clamp-2 font-semibold leading-snug">{v.title}</span>
                     <span className="flex items-center justify-between gap-2">
-                      <StatusBadge status={v.status} className="text-muted-foreground" />
-                      {v.file_deleted_at && <span className="text-xs text-muted-foreground">sem arquivo</span>}
+                      <StatusBadge status={v.status} />
+                      {v.file_deleted_at && <span className="text-meta text-muted">sem arquivo</span>}
                     </span>
                   </Link>
                 </li>

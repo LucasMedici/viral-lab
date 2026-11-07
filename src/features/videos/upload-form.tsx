@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState, useTransition } from "react";
-import { Film, RotateCcw, UploadCloud } from "lucide-react";
+import { Check, Film, RotateCcw, UploadCloud } from "lucide-react";
 import { PlatformIcon } from "@/components/platform-icon";
 import { Button } from "@/components/ui/button";
 import { Field, Select } from "@/components/ui/field";
@@ -124,7 +124,7 @@ export function UploadForm({ accounts, defaultAccountId }: { accounts: AccountOp
   const selected = accounts.find((a) => a.id === accountId);
 
   return (
-    <form onSubmit={onSubmit} className="grid gap-8 lg:grid-cols-[18rem_minmax(0,1fr)]">
+    <form onSubmit={onSubmit} className="grid gap-10 lg:grid-cols-[19rem_minmax(0,1fr)]">
       <div className="flex flex-col gap-5">
         <Field label="Conta" htmlFor="account" error={errors.account}>
           <Select id="account" value={accountId} onChange={(e) => setAccountId(e.target.value)} disabled={locked} required>
@@ -149,14 +149,16 @@ export function UploadForm({ accounts, defaultAccountId }: { accounts: AccountOp
               if (f) void startUpload(f);
             }}
             className={cn(
-              "flex aspect-[9/16] max-h-[28rem] cursor-pointer flex-col items-center justify-center gap-3 rounded-[var(--radius-lg)] border-2 border-dashed border-border bg-surface px-6 text-center transition-colors hover:border-primary/60 has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-ring",
-              dragging && "border-primary bg-primary/5",
+              "flex aspect-[9/16] max-h-[30rem] cursor-pointer flex-col items-center justify-center gap-3 rounded-[var(--radius-card)] border-2 border-dashed border-border bg-surface px-6 text-center transition-colors hover:border-muted/60 has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-accent",
+              dragging && "border-text bg-surface-2",
               !accountId && "opacity-60",
             )}
           >
-            <UploadCloud className="size-8 text-primary" />
-            <span className="text-sm font-medium">Arraste o vídeo ou clique para escolher</span>
-            <span className="text-xs text-muted-foreground">
+            <span className="grid size-14 place-items-center rounded-full bg-surface-2">
+              <UploadCloud className="size-6" strokeWidth={1.75} />
+            </span>
+            <span className="font-semibold">Arraste o vídeo ou clique para escolher</span>
+            <span className="text-meta text-muted">
               {selected ? `Vai para @${selected.username}` : "Escolha a conta primeiro"}. Até {formatBytes(MAX_UPLOAD_BYTES)}.
             </span>
             <input
@@ -174,14 +176,14 @@ export function UploadForm({ accounts, defaultAccountId }: { accounts: AccountOp
           </label>
         ) : (
           <div className="flex flex-col gap-3">
-            <div className="relative overflow-hidden rounded-[var(--radius-lg)] border border-border bg-black">
-              {previewUrl && <video src={previewUrl} controls playsInline className="aspect-[9/16] max-h-[28rem] w-full object-contain" />}
+            <div className="relative overflow-hidden rounded-[var(--radius-card)] bg-surface-2 p-2">
+              {previewUrl && <video src={previewUrl} controls playsInline className="aspect-[9/16] max-h-[30rem] w-full rounded-[8px] bg-[#0f0f14] object-contain" />}
             </div>
-            <div className="flex items-start gap-2 text-sm">
-              <Film className="mt-0.5 size-4 shrink-0 text-muted-foreground" />
+            <div className="flex items-start gap-2 text-meta">
+              <Film className="mt-0.5 size-4 shrink-0 text-muted" />
               <div className="min-w-0 flex-1">
-                <p className="truncate font-medium">{file.name}</p>
-                <p className="text-xs text-muted-foreground">{formatBytes(file.size)}</p>
+                <p className="truncate font-semibold">{file.name}</p>
+                <p className="text-meta text-muted">{formatBytes(file.size)}</p>
               </div>
               <Button variant="ghost" size="sm" onClick={resetFile} disabled={saving}>
                 <RotateCcw /> Trocar
@@ -190,9 +192,9 @@ export function UploadForm({ accounts, defaultAccountId }: { accounts: AccountOp
             <UploadStatus upload={upload} onRetry={() => file && void startUpload(file)} />
           </div>
         )}
-        {upload.phase === "error" && !file && <p className="text-sm text-danger">{upload.message}</p>}
+        {upload.phase === "error" && !file && <p className="text-meta text-danger">{upload.message}</p>}
         {selected && (
-          <p className="flex items-center gap-1.5 text-xs text-muted-foreground">
+          <p className="flex items-center gap-1.5 text-meta text-muted">
             <PlatformIcon platform={selected.platform} className="size-3.5" /> {selected.display_name}
           </p>
         )}
@@ -200,12 +202,12 @@ export function UploadForm({ accounts, defaultAccountId }: { accounts: AccountOp
 
       <div className="flex flex-col gap-6">
         <VideoFields errors={errors} />
-        {formError && <p role="alert" className="text-sm text-danger">{formError}</p>}
+        {formError && <p role="alert" className="text-meta text-danger">{formError}</p>}
         <div className="flex items-center gap-3">
-          <Button type="submit" disabled={saving || upload.phase === "uploading"}>
+          <Button type="submit" variant="primary" disabled={saving || upload.phase === "uploading"}>
             {saving ? "Salvando…" : upload.phase === "uploading" ? "Enviando arquivo…" : "Salvar vídeo"}
           </Button>
-          <p className="text-xs text-muted-foreground">O arquivo vai direto para o storage; você pode preencher os campos enquanto ele sobe.</p>
+          <p className="text-meta text-muted">O arquivo vai direto para o storage; você pode preencher os campos enquanto ele sobe.</p>
         </div>
       </div>
     </form>
@@ -217,21 +219,25 @@ function UploadStatus({ upload, onRetry }: { upload: Upload; onRetry: () => void
     const pct = Math.round(upload.progress * 100);
     return (
       <div role="status" aria-live="polite" className="flex flex-col gap-1.5">
-        <div className="h-1.5 overflow-hidden rounded-full bg-surface-muted">
-          <div className="h-full rounded-full bg-primary transition-[width]" style={{ width: `${pct}%` }} />
+        <div className="h-1.5 overflow-hidden rounded-full bg-surface-2">
+          <div className="h-full rounded-full bg-accent transition-[width]" style={{ width: `${pct}%` }} />
         </div>
-        <p className="text-xs tabular-nums text-muted-foreground">Enviando {pct}%</p>
+        <p className="text-meta tabular-nums text-muted">Enviando {pct}%</p>
       </div>
     );
   }
   if (upload.phase === "done") {
-    return <p role="status" className="text-xs font-medium text-status-publicado">Arquivo enviado. Falta só salvar.</p>;
+    return (
+      <p role="status" className="inline-flex items-center gap-1.5 text-meta font-semibold">
+        <Check className="size-4" strokeWidth={2} /> Arquivo enviado. Falta só salvar.
+      </p>
+    );
   }
   if (upload.phase === "error") {
     return (
-      <p role="alert" className="text-xs text-danger">
+      <p role="alert" className="text-meta text-danger">
         {upload.message}.{" "}
-        <button type="button" onClick={onRetry} className="font-medium underline underline-offset-4">Tentar de novo</button>
+        <button type="button" onClick={onRetry} className="font-semibold underline underline-offset-4">Tentar de novo</button>
       </p>
     );
   }

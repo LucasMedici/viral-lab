@@ -35,12 +35,12 @@ export function Dialog({
       }}
       aria-labelledby="dialog-title"
       className={cn(
-        "m-auto w-[min(28rem,calc(100vw-2rem))] rounded-[var(--radius-lg)] border border-border bg-surface p-0 text-foreground shadow-2xl",
+        "m-auto w-[min(28rem,calc(100vw-2rem))] rounded-[var(--radius-card)] border border-border bg-surface p-0 text-text",
         className,
       )}
     >
       <div className="flex flex-col gap-4 p-6">
-        <h2 id="dialog-title" className="font-display text-lg font-semibold tracking-tight">
+        <h2 id="dialog-title" className="font-display text-card font-bold">
           {title}
         </h2>
         {children}

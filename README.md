@@ -44,8 +44,12 @@ src/
 supabase/migrations/    schema versionado
 ```
 
-## Personalização
+## Identidade visual
 
-- **Logo**: troque `src/components/logo.tsx` e os arquivos em `public/` (`icon.svg`, `favicon.ico`, `apple-icon.png`, `logo.svg`).
-- **Cores**: todas as cores (marca, status e plataformas) estão em `src/app/globals.css`, em `:root` (tema claro) e `.dark` (tema escuro).
+A fonte da verdade é [docs/BRAND.md](docs/BRAND.md): paleta, tipografia (Space Grotesk + Inter), componentes e regras do logo.
+
+- **Logo**: arquivos em `public/brand/`; o componente `src/components/logo.tsx` alterna `logo-dark.svg` / `logo-light.svg` conforme o tema.
+- **Ícones do app**: `public/favicon.ico`, `public/icon.svg`, `public/apple-touch-icon.png` (configurados em `src/app/layout.tsx`).
+- **Cores**: tokens do BRAND.md em `src/app/globals.css` (`:root` = claro, `.dark` = escuro), expostos no Tailwind como `bg-background`, `bg-surface`, `bg-surface-2`, `text-text`, `text-muted`, `bg-accent`, `text-link`, `text-danger` e `bg-status-*`. Não use cores fora dessa paleta.
+- **Tema**: escuro por padrão; claro pelo botão no topo ou pela opção "Sistema".
 - **Trocar de storage**: implemente `StorageProvider` (`src/lib/storage/types.ts`) e exporte-o em `src/lib/storage/index.ts`.

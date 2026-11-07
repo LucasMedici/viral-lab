@@ -1,30 +1,61 @@
+import Image from "next/image";
 import { cn } from "@/lib/utils";
 
 /**
- * Logo provisória do ViralLab.
- * Para trocar pela logo definitiva, substitua o conteúdo deste componente
- * (ex.: por <Image src="/logo.svg" … />) e os arquivos em /public.
+ * Logo oficial (docs/BRAND.md, arquivos em public/brand/).
+ * A troca claro/escuro é feita por CSS (classe .dark no <html>), sem flash na hidratação.
+ * Regras: não recolorir, esticar ou aplicar sombra; altura mínima de 24px no horizontal.
  */
-export function Logo({ className, showWordmark = true }: { className?: string; showWordmark?: boolean }) {
+export function Logo({ className, priority = false }: { className?: string; priority?: boolean }) {
   return (
-    <span className={cn("inline-flex items-center gap-2", className)}>
-      <LogoMark className="size-7" />
-      {showWordmark && (
-        <span className="font-display text-[1.3rem] font-bold leading-none tracking-[-0.04em] text-foreground">
-          ViralLab
-        </span>
-      )}
+    <span className={cn("inline-flex", className)}>
+      <Image
+        src="/brand/logo-dark.svg"
+        alt="ViralLab"
+        width={403}
+        height={120}
+        priority={priority}
+        unoptimized
+        className="hidden h-7 w-auto dark:block"
+      />
+      <Image
+        src="/brand/logo-light.svg"
+        alt="ViralLab"
+        width={404}
+        height={120}
+        priority={priority}
+        unoptimized
+        className="h-7 w-auto dark:hidden"
+      />
     </span>
   );
 }
 
-/** Marca: um quadro vertical 9:16 (vídeo curto) com uma "cultura" crescendo no canto. */
-export function LogoMark({ className }: { className?: string }) {
+/**
+ * Versão para telas de destaque (login, estados vazios): vertical no tema escuro.
+ * Não há versão vertical clara, então no tema claro usa o horizontal claro, maior.
+ */
+export function LogoHero({ className }: { className?: string }) {
   return (
-    <svg viewBox="0 0 64 64" aria-hidden="true" className={className}>
-      <rect width="64" height="64" rx="16" className="fill-primary" />
-      <rect x="21" y="12" width="22" height="40" rx="6" fill="none" className="stroke-primary-foreground" strokeWidth="4" />
-      <circle cx="43" cy="44" r="8" className="fill-accent stroke-primary" strokeWidth="3" />
-    </svg>
+    <span className={cn("inline-flex", className)}>
+      <Image
+        src="/brand/logo-vertical-dark.svg"
+        alt="ViralLab"
+        width={213}
+        height={166}
+        priority
+        unoptimized
+        className="hidden h-24 w-auto dark:block"
+      />
+      <Image
+        src="/brand/logo-light.svg"
+        alt="ViralLab"
+        width={404}
+        height={120}
+        priority
+        unoptimized
+        className="h-12 w-auto dark:hidden"
+      />
+    </span>
   );
 }

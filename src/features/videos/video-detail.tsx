@@ -59,7 +59,7 @@ export function VideoDetail({ video, justUploaded }: { video: DetailVideo; justU
   }, [justUploaded]);
 
   return (
-    <div className="grid gap-10 lg:grid-cols-[20rem_minmax(0,1fr)]">
+    <div className="grid gap-10 lg:grid-cols-[21rem_minmax(0,1fr)]">
       <aside className="flex flex-col gap-4">
         <Preview video={video} />
         <FileActions video={video} formRef={formRef} onDelete={() => setAskDelete("manual")} />
@@ -80,8 +80,8 @@ export function VideoDetail({ video, justUploaded }: { video: DetailVideo; justU
           errors={errors}
         />
 
-        <section aria-labelledby="publicacao" className="flex flex-col gap-3 rounded-[var(--radius-lg)] border border-border bg-surface p-4 sm:p-5">
-          <h2 id="publicacao" className="font-display text-lg font-semibold tracking-tight">Publicação</h2>
+        <section aria-labelledby="publicacao" className="flex flex-col gap-4 rounded-[var(--radius-card)] border border-border bg-surface p-5">
+          <h2 id="publicacao" className="font-display text-card font-bold">Publicação</h2>
           <Field
             label="Link do post publicado"
             htmlFor="published_url"
@@ -99,14 +99,14 @@ export function VideoDetail({ video, justUploaded }: { video: DetailVideo; justU
             />
           </Field>
           {video.publishedUrl && (
-            <a href={video.publishedUrl} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1.5 text-sm font-medium text-primary underline-offset-4 hover:underline">
+            <a href={video.publishedUrl} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1.5 text-meta font-semibold text-link underline-offset-4 hover:underline">
               Abrir post <ExternalLink className="size-3.5" />
             </a>
           )}
         </section>
 
         <div className="flex flex-wrap items-center gap-3">
-          <Button type="submit" disabled={saving}>{saving ? "Salvando…" : "Salvar alterações"}</Button>
+          <Button type="submit" variant="primary" disabled={saving}>{saving ? "Salvando…" : "Salvar alterações"}</Button>
           <DeleteVideoButton videoId={video.id} className="ml-auto" />
         </div>
       </form>
@@ -123,23 +123,25 @@ export function VideoDetail({ video, justUploaded }: { video: DetailVideo; justU
 function Preview({ video }: { video: DetailVideo }) {
   if (video.fileDeletedAt) {
     return (
-      <div className="flex aspect-[9/16] max-h-[32rem] flex-col items-center justify-center gap-3 rounded-[var(--radius-lg)] border border-dashed border-border bg-surface px-6 text-center">
-        <FileX2 className="size-8 text-muted-foreground" />
-        <p className="text-sm font-medium">Arquivo removido do storage</p>
-        <p className="text-xs text-muted-foreground">Em {video.fileDeletedAt}. Os dados do vídeo continuam salvos.</p>
+      <div className="flex aspect-[9/16] max-h-[34rem] flex-col items-center justify-center gap-3 rounded-[var(--radius-card)] border border-dashed border-border bg-surface px-6 text-center">
+        <span className="grid size-14 place-items-center rounded-full bg-surface-2">
+          <FileX2 className="size-6 text-muted" strokeWidth={1.75} />
+        </span>
+        <p className="font-semibold">Arquivo removido do storage</p>
+        <p className="text-meta text-muted">Em {video.fileDeletedAt}. Os dados do vídeo continuam salvos.</p>
       </div>
     );
   }
   if (!video.previewUrl) {
     return (
-      <div className="flex aspect-[9/16] max-h-[32rem] items-center justify-center rounded-[var(--radius-lg)] border border-dashed border-border bg-surface px-6 text-center text-sm text-muted-foreground">
+      <div className="flex aspect-[9/16] max-h-[34rem] items-center justify-center rounded-[var(--radius-card)] border border-dashed border-border bg-surface px-6 text-center text-meta text-muted">
         {video.previewError ? "Não foi possível gerar o preview. Confira as variáveis do R2." : "Vídeo sem arquivo."}
       </div>
     );
   }
   return (
-    <div className="overflow-hidden rounded-[var(--radius-lg)] border border-border bg-black">
-      <video src={video.previewUrl} controls playsInline preload="metadata" className="aspect-[9/16] max-h-[32rem] w-full object-contain" />
+    <div className="overflow-hidden rounded-[var(--radius-card)] bg-surface-2 p-2">
+      <video src={video.previewUrl} controls playsInline preload="metadata" className="aspect-[9/16] max-h-[34rem] w-full rounded-[8px] bg-[#0f0f14] object-contain" />
     </div>
   );
 }
@@ -199,7 +201,7 @@ function FileActions({
             <Trash2 /> Apagar arquivo
           </Button>
           {video.fileName && (
-            <p className="truncate text-center text-xs text-muted-foreground" title={video.fileName}>
+            <p className="truncate text-center text-meta text-muted" title={video.fileName}>
               {video.fileName}, {formatBytes(video.fileSize)}
             </p>
           )}
@@ -219,7 +221,7 @@ function DeleteFileDialog({ videoId, mode, onClose }: { videoId: string; mode: "
       onClose={onClose}
       title={published ? "Vídeo marcado como publicado. Apagar o arquivo agora?" : "Apagar o arquivo deste vídeo?"}
     >
-      <p className="text-sm text-muted-foreground">
+      <p className="text-meta text-muted">
         {published
           ? "Liberar o espaço mantém você dentro do plano gratuito. Mantenha o arquivo se ainda for repostar em outra plataforma."
           : "O arquivo sai do storage e não pode ser recuperado. Título, legenda, datas e link continuam salvos."}
@@ -259,7 +261,7 @@ function DeleteVideoButton({ videoId, className }: { videoId: string; className?
         Excluir vídeo
       </Button>
       <Dialog open={open} onClose={() => setOpen(false)} title="Excluir este vídeo?">
-        <p className="text-sm text-muted-foreground">
+        <p className="text-meta text-muted">
           Remove o registro e o arquivo. Para manter o histórico e liberar só o espaço, use “Apagar arquivo”.
         </p>
         <div className="flex justify-end gap-2">

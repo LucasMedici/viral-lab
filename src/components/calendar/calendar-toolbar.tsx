@@ -26,7 +26,7 @@ export function CalendarToolbar({ base, view, anchor, today }: { base: string; v
   const prev = view === "mes" ? addMonths(anchor, -1) : addDays(anchor, -7);
   const next = view === "mes" ? addMonths(anchor, 1) : addDays(anchor, 7);
   const navBtn =
-    "grid size-8 place-items-center rounded-[var(--radius-md)] text-muted-foreground hover:bg-surface-muted hover:text-foreground";
+    "grid size-9 place-items-center rounded-full text-muted transition-colors hover:bg-surface-2 hover:text-text";
 
   return (
     <div className="flex flex-wrap items-center gap-3">
@@ -38,16 +38,16 @@ export function CalendarToolbar({ base, view, anchor, today }: { base: string; v
           <ChevronRight className="size-4" />
         </Link>
       </div>
-      <h2 className="font-display text-xl font-semibold tracking-tight" aria-live="polite">
+      <h2 className="font-display text-section font-bold" aria-live="polite">
         {rangeLabel(anchor, view)}
       </h2>
       <Link
         href={href(base, view, today)}
-        className="rounded-[var(--radius-md)] border border-border px-2.5 py-1 text-xs font-medium text-muted-foreground hover:bg-surface-muted hover:text-foreground"
+        className="inline-flex h-8 items-center rounded-full bg-surface-2 px-3 text-meta font-semibold text-muted transition-colors hover:text-text"
       >
         Hoje
       </Link>
-      <div role="tablist" aria-label="Visão do calendário" className="ml-auto flex rounded-[var(--radius-md)] border border-border bg-surface p-0.5">
+      <div role="tablist" aria-label="Visão do calendário" className="ml-auto flex rounded-full bg-surface-2 p-1">
         {(["semana", "mes"] as const).map((v) => (
           <Link
             key={v}
@@ -55,8 +55,8 @@ export function CalendarToolbar({ base, view, anchor, today }: { base: string; v
             aria-selected={view === v}
             href={href(base, v, anchor)}
             className={cn(
-              "rounded-[calc(var(--radius-md)-2px)] px-3 py-1 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground",
-              view === v && "bg-surface-muted text-foreground",
+              "rounded-full px-3.5 py-1.5 text-meta font-semibold text-muted transition-colors hover:text-text",
+              view === v && "bg-surface text-text",
             )}
           >
             {v === "mes" ? "Mês" : "Semana"}
