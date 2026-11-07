@@ -42,7 +42,7 @@ export const viewport: Viewport = {
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html lang="pt-BR" suppressHydrationWarning className={`${spaceGrotesk.variable} ${inter.variable} h-full antialiased`}>
-      <body className="flex min-h-full flex-col bg-background font-sans text-body text-text">
+      <body className="flex min-h-full flex-col overflow-x-clip bg-background font-sans text-body text-text">
         <ThemeProvider>
           {children}
           <Toaster
