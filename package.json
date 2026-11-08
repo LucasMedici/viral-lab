@@ -8,6 +8,7 @@
     "start": "next start",
     "lint": "eslint",
     "typecheck": "next typegen && tsc --noEmit",
+    "test": "tsx --test \"src/**/*.test.ts\"",
     "r2:cors": "tsx --env-file=.env.local scripts/r2-cors.ts",
     "db:push": "supabase db push --remote",
     "db:types": "supabase gen types --lang=typescript --schema public --remote > src/types/database.ts"

@@ -2,6 +2,7 @@ import "server-only";
 import { createServerClient } from "@supabase/ssr";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
+import { isAllowedUser } from "@/lib/auth/owner";
 import type { Database } from "@/types/database";
 
 export async function createClient() {
@@ -38,5 +39,10 @@ export async function requireUser() {
     data: { user },
   } = await supabase.auth.getUser();
   if (!user) redirect("/login");
+  if (!isAllowedUser(user)) {
+    // Sessão válida, mas de alguém que não é o dono: encerra e volta ao login.
+    await supabase.auth.signOut();
+    redirect("/login?erro=acesso");
+  }
   return { supabase, user };
 }

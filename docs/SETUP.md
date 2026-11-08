@@ -14,6 +14,7 @@ Vá anotando os valores num bloco de notas temporário. Eles vão para dois luga
 | `R2_BUCKET` | `viral-lab` |
 | `R2_FREE_TIER_BYTES` | `10737418240` (10 GB) |
 | `R2_STORAGE_HARD_LIMIT_BYTES` | `9663676416` (9 GB, teto do app; opcional) |
+| `OWNER_EMAIL` | o email do seu usuário do passo 1.4 (só ele entra no app) |
 | `NEXT_PUBLIC_APP_TIMEZONE` | `America/Sao_Paulo` |
 | `R2_CORS_ORIGINS` | só local: `http://localhost:3000,https://virallab.vercel.app` |
 
@@ -33,6 +34,7 @@ Vá anotando os valores num bloco de notas temporário. Eles vão para dois luga
    - Plano **Free**. Clique em **Create new project** e espere ~2 min.
 2. **Desligar o cadastro público**: menu **Authentication › Sign In / Providers**. Em **User Signups**, desligue **Allow new users to sign up** e salve. Mantenha o provedor **Email** habilitado.
    - Em **Authentication › Sign In / Providers › Email**, pode desligar **Confirm email** (você criará o usuário já confirmado).
+   - Na mesma tela, confira que **Allow anonymous sign-ins** está **desligado**. (O app recusa usuários anônimos de qualquer forma.)
 3. **Chaves**: menu **Project Settings › API Keys**.
    - Copie a **Publishable key** (`sb_publishable_…`) → `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY`.
      (Se o projeto só mostrar chaves "legacy", use a **anon public**.)

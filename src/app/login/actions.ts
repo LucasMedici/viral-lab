@@ -2,6 +2,8 @@
 
 import { redirect } from "next/navigation";
 import type { ActionResult } from "@/lib/action-result";
+import { isAllowedUser } from "@/lib/auth/owner";
+import { safeNextPath } from "@/lib/safe-redirect";
 import { createClient } from "@/lib/supabase/server";
 
 export async function signIn(_prev: ActionResult | null, formData: FormData): Promise<ActionResult> {
@@ -12,7 +14,11 @@ export async function signIn(_prev: ActionResult | null, formData: FormData): Pr
   if (!email || !password) return { ok: false, error: "Informe email e senha." };
 
   const supabase = await createClient();
-  const { error } = await supabase.auth.signInWithPassword({ email, password });
+  const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+  if (!error && !isAllowedUser(data.user)) {
+    await supabase.auth.signOut();
+    return { ok: false, error: "Este usuário não tem acesso ao ViralLab." };
+  }
   if (error) {
     return {
       ok: false,
@@ -20,6 +26,6 @@ export async function signIn(_prev: ActionResult | null, formData: FormData): Pr
     };
   }
 
-  // Só redireciona para caminhos internos.
-  redirect(next.startsWith("/") && !next.startsWith("//") ? next : "/");
+  // Só redireciona para caminhos internos (bloqueia "/\evil.com", "//evil.com" etc.).
+  redirect(safeNextPath(next));
 }
