@@ -21,7 +21,7 @@ Vá anotando os valores num bloco de notas temporário. Eles vão para dois luga
 
 ## 0. Pré-requisito local
 
-- Node.js 22 (o projeto roda com 20.9+, mas o `@supabase/supabase-js` já avisa que o 20 será descontinuado). Com nvm: `nvm install 22 && nvm use`.
+- Node.js 22 ou mais novo. Com nvm: `nvm install 22 && nvm use` (o projeto tem `.nvmrc`).
 - Na pasta do projeto: `npm install`.
 
 ## 1. Supabase (banco + login)
