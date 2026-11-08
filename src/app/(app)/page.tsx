@@ -50,7 +50,7 @@ export default async function AccountsPage({ searchParams }: PageProps<"/">) {
           <FilterPill href="/" active={!filter}>Todas</FilterPill>
           {PLATFORMS.map((p) => (
             <FilterPill key={p} href={`/?plataforma=${p}`} active={filter === p}>
-              <PlatformIcon platform={p} className="size-3.5" />
+              <PlatformIcon platform={p} className="size-3.5" decorative />
               {PLATFORM_LABEL[p]}
             </FilterPill>
           ))}

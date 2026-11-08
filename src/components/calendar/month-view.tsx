@@ -41,7 +41,7 @@ export function MonthView({
             <div
               key={key}
               className={cn(
-                "flex min-h-20 flex-col gap-1.5 border-border p-1.5 sm:min-h-32 sm:p-2",
+                "relative flex min-h-20 flex-col gap-1.5 border-border p-1.5 sm:min-h-32 sm:p-2",
                 i % 7 !== 6 && "border-r",
                 i < days.length - 7 && "border-b",
                 outside && "bg-background/60",
@@ -58,15 +58,21 @@ export function MonthView({
                 {format(day, "d")}
               </span>
 
-              {/* Mobile: quantidade de vídeos (toque abre a semana, onde aparecem com status) */}
+              {/* Celular: a célula inteira abre a semana (onde os vídeos aparecem com status) */}
               {items.length > 0 && (
-                <Link
-                  href={weekHref}
-                  aria-label={`${items.length} ${items.length === 1 ? "vídeo" : "vídeos"}, ver a semana`}
-                  className="inline-flex h-5 w-fit items-center rounded-full bg-surface-2 px-1.5 text-[0.6875rem] font-semibold tabular-nums sm:hidden"
-                >
-                  {items.length}
-                </Link>
+                <>
+                  <Link
+                    href={weekHref}
+                    aria-label={`${format(day, "d 'de' MMMM", { locale: ptBR })}: ${items.length} ${items.length === 1 ? "vídeo" : "vídeos"}, ver a semana`}
+                    className="absolute inset-0 transition-colors active:bg-surface-2 sm:hidden"
+                  />
+                  <span
+                    aria-hidden="true"
+                    className="pointer-events-none relative inline-flex h-5 w-fit items-center rounded-full bg-surface-2 px-1.5 text-[0.6875rem] font-semibold tabular-nums sm:hidden"
+                  >
+                    {items.length}
+                  </span>
+                </>
               )}
 
               <div className="hidden flex-col gap-1 sm:flex">

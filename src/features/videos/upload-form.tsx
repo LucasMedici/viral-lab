@@ -177,7 +177,7 @@ export function UploadForm({ accounts, defaultAccountId }: { accounts: AccountOp
         ) : (
           <div className="flex flex-col gap-3">
             <div className="relative overflow-hidden rounded-[var(--radius-card)] bg-surface-2 p-2">
-              {previewUrl && <video src={previewUrl} controls playsInline className="aspect-[9/16] max-h-[30rem] w-full rounded-[8px] bg-[#0f0f14] object-contain" />}
+              {previewUrl && <video src={previewUrl} controls playsInline className="aspect-[9/16] max-h-[30rem] w-full rounded-[4px] bg-[#0f0f14] object-contain" />}
             </div>
             <div className="flex items-start gap-2 text-meta">
               <Film className="mt-0.5 size-4 shrink-0 text-muted" />

@@ -26,7 +26,7 @@ export function CalendarToolbar({ base, view, anchor, today }: { base: string; v
   const prev = view === "mes" ? addMonths(anchor, -1) : addDays(anchor, -7);
   const next = view === "mes" ? addMonths(anchor, 1) : addDays(anchor, 7);
   const navBtn =
-    "grid size-9 place-items-center rounded-full text-muted transition-colors hover:bg-surface-2 hover:text-text";
+    "grid size-10 place-items-center rounded-full text-muted transition-colors hover:bg-surface-2 hover:text-text";
 
   return (
     <div className="flex flex-wrap items-center gap-3">
@@ -43,7 +43,7 @@ export function CalendarToolbar({ base, view, anchor, today }: { base: string; v
       </h2>
       <Link
         href={href(base, view, today)}
-        className="inline-flex h-8 items-center rounded-full bg-surface-2 px-3 text-meta font-semibold text-muted transition-colors hover:text-text"
+        className="relative inline-flex h-8 items-center rounded-full bg-surface-2 px-3 text-meta font-semibold text-muted transition-colors after:absolute after:-inset-y-1 after:inset-x-0 hover:text-text"
       >
         Hoje
       </Link>

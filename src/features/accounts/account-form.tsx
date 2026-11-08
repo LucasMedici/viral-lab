@@ -41,7 +41,7 @@ export function AccountForm({ account }: { account?: Account }) {
                 onChange={() => setPlatform(p)}
                 className="sr-only"
               />
-              <PlatformIcon platform={p} className="size-4" />
+              <PlatformIcon platform={p} className="size-4" decorative />
               {PLATFORM_LABEL[p]}
             </label>
           ))}

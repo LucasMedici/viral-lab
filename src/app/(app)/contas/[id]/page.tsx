@@ -45,7 +45,7 @@ export default async function AccountPage({ params, searchParams }: PageProps<"/
     <div className="flex flex-col gap-8">
       <header className="flex flex-wrap items-center gap-4">
         <span className="grid size-16 shrink-0 place-items-center rounded-[var(--radius-card)] bg-surface-2">
-          <PlatformIcon platform={account.platform} className="size-7" />
+          <PlatformIcon platform={account.platform} className="size-7" decorative />
         </span>
         <div className="min-w-0 flex-1">
           <Link href="/" className="text-meta text-muted hover:text-text">Contas</Link>

@@ -17,6 +17,7 @@ Todos ficam em `public/brand/`. O texto dos logos já está convertido em contor
 | `logo-lime.svg` | Logo sobre fundo verde ácido |
 | `logo-mono.svg` | Versão branca monocromática (marca d'água em vídeos) |
 | `logo-vertical-dark.svg` | Versão vertical, fundo escuro (tela de login, telas vazias) |
+| `logo-vertical-light.svg` | Versão vertical, fundo claro (tela de login, telas vazias) |
 | `symbol.svg` | Só o símbolo, sem texto, para fundos escuros |
 | `icon.svg` / `icon-512.png` | Ícone do app (quadrado arredondado verde) |
 | `avatar.svg` / `avatar-1080.png` | Foto de perfil para TikTok, Instagram e YouTube (quadrado sem bordas; as plataformas cortam em círculo) |

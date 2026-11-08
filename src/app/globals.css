@@ -99,6 +99,10 @@
   h2,
   h3 {
     letter-spacing: -0.02em;
+    text-wrap: balance; /* linhas equilibradas nos títulos */
+  }
+  p {
+    text-wrap: pretty; /* evita palavra órfã na última linha */
   }
   /* Foco de teclado visível: anel de 2px em Ácido */
   :focus-visible {

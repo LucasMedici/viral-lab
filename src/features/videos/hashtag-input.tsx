@@ -24,7 +24,7 @@ export function HashtagInput({ name, id, defaultValue = [] }: { name: string; id
           <button
             type="button"
             onClick={() => setTags(tags.filter((x) => x !== t))}
-            className="grid size-4 place-items-center rounded-full text-muted hover:bg-surface-2 hover:text-text"
+            className="relative grid size-4 place-items-center rounded-full text-muted transition-colors after:absolute after:-inset-1.5 hover:bg-surface-2 hover:text-text"
             aria-label={`Remover #${t}`}
           >
             <X className="size-3" />

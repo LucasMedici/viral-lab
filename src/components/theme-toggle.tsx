@@ -19,7 +19,7 @@ export function ThemeToggle({ className }: { className?: string }) {
   const mounted = useSyncExternalStore(subscribe, () => true, () => false);
 
   return (
-    <div role="radiogroup" aria-label="Tema" className={cn("flex items-center gap-0.5 rounded-full bg-surface-2 p-0.5", className)}>
+    <div role="radiogroup" aria-label="Tema" className={cn("flex items-center gap-1 rounded-full bg-surface-2 p-0.5", className)}>
       {OPTIONS.map(({ value, label, Icon }) => {
         const active = mounted && theme === value;
         return (
@@ -32,11 +32,11 @@ export function ThemeToggle({ className }: { className?: string }) {
             title={label}
             onClick={() => setTheme(value)}
             className={cn(
-              "grid size-7 place-items-center rounded-full text-muted transition-colors hover:text-text",
+              "relative grid size-8 place-items-center rounded-full text-muted transition-colors after:absolute after:-inset-x-0.5 after:-inset-y-1 hover:text-text",
               active && "bg-surface text-text",
             )}
           >
-            <Icon className="size-3.5" strokeWidth={2} />
+            <Icon className="size-4" strokeWidth={1.75} />
           </button>
         );
       })}

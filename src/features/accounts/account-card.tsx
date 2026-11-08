@@ -10,7 +10,7 @@ export function AccountCard({ account }: { account: AccountOverview }) {
     <article className="group relative flex min-w-0 flex-col rounded-[var(--radius-card)] border border-border bg-surface transition-colors hover:border-muted/50">
       <div className="flex items-start gap-3 p-5">
         <span className="grid size-11 shrink-0 place-items-center rounded-[var(--radius-control)] bg-surface-2">
-          <PlatformIcon platform={account.platform} className="size-5" />
+          <PlatformIcon platform={account.platform} className="size-5" decorative />
         </span>
         <div className="min-w-0 flex-1 pt-0.5">
           <h2 className="truncate font-display text-card font-medium leading-tight">
@@ -25,7 +25,7 @@ export function AccountCard({ account }: { account: AccountOverview }) {
         </div>
         <Link
           href={`/contas/${account.id}/editar`}
-          className="relative z-10 -mr-1 -mt-1 rounded-full px-2.5 py-1 text-meta font-semibold text-muted transition-colors hover:bg-surface-2 hover:text-text"
+          className="relative z-10 -mr-1 -mt-1 rounded-full px-2.5 py-1 text-meta font-semibold text-muted transition-colors after:absolute after:-inset-x-1 after:-inset-y-2 hover:bg-surface-2 hover:text-text"
         >
           Editar
         </Link>

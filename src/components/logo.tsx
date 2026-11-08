@@ -32,8 +32,8 @@ export function Logo({ className, priority = false }: { className?: string; prio
 }
 
 /**
- * Versão para telas de destaque (login, estados vazios): vertical no tema escuro.
- * Não há versão vertical clara, então no tema claro usa o horizontal claro, maior.
+ * Versão para telas de destaque (login, estados vazios): vertical nos dois temas,
+ * com a mesma altura para o layout não mudar ao alternar o tema.
  */
 export function LogoHero({ className }: { className?: string }) {
   return (
@@ -48,13 +48,13 @@ export function LogoHero({ className }: { className?: string }) {
         className="hidden h-24 w-auto dark:block"
       />
       <Image
-        src="/brand/logo-light.svg"
+        src="/brand/logo-vertical-light.svg"
         alt="ViralLab"
-        width={404}
-        height={120}
+        width={213}
+        height={166}
         priority
         unoptimized
-        className="h-12 w-auto dark:hidden"
+        className="h-24 w-auto dark:hidden"
       />
     </span>
   );

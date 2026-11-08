@@ -8,9 +8,14 @@ import { Dialog } from "@/components/ui/dialog";
 import { Field, Input } from "@/components/ui/field";
 import type { ActionResult } from "@/lib/action-result";
 import type { VideoStatus } from "@/lib/constants";
-import { formatBytes } from "@/lib/utils";
+import { cn, formatBytes } from "@/lib/utils";
 import { deleteVideo, deleteVideoFile, getDownloadUrl, updateVideo } from "./actions";
 import { VideoFields } from "./video-fields";
+
+// Troca contextual de ícone (os dois ficam no DOM e fazem cross-fade).
+const ICON_SWAP = "transition-[opacity,scale,filter] duration-300 ease-[cubic-bezier(0.2,0,0,1)] motion-reduce:transition-none";
+const ICON_IN = "scale-100 opacity-100 blur-[0px]";
+const ICON_OUT = "scale-[0.25] opacity-0 blur-[4px]";
 
 type DetailVideo = {
   id: string;
@@ -141,7 +146,7 @@ function Preview({ video }: { video: DetailVideo }) {
   }
   return (
     <div className="overflow-hidden rounded-[var(--radius-card)] bg-surface-2 p-2">
-      <video src={video.previewUrl} controls playsInline preload="metadata" className="aspect-[9/16] max-h-[34rem] w-full rounded-[8px] bg-[#0f0f14] object-contain" />
+      <video src={video.previewUrl} controls playsInline preload="metadata" className="aspect-[9/16] max-h-[34rem] w-full rounded-[4px] bg-[#0f0f14] object-contain" />
     </div>
   );
 }
@@ -179,7 +184,10 @@ function FileActions({
   return (
     <div className="flex flex-col gap-2">
       <Button variant="secondary" onClick={copyCaption} aria-live="polite">
-        {copied ? <Check /> : <Copy />}
+        <span data-icon className="relative grid size-4 place-items-center" aria-hidden="true">
+          <Copy className={cn(ICON_SWAP, copied ? ICON_OUT : ICON_IN)} />
+          <Check className={cn(ICON_SWAP, "absolute", copied ? ICON_IN : ICON_OUT)} />
+        </span>
         {copied ? "Copiado" : "Copiar legenda + hashtags"}
       </Button>
       {video.hasFile && (

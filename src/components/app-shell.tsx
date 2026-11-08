@@ -97,7 +97,7 @@ export function AppShell({
           onClick={() => setOpen(true)}
           aria-label="Abrir menu"
           aria-expanded={open}
-          className="grid size-10 place-items-center rounded-[var(--radius-control)] text-text hover:bg-surface-2"
+          className="-ml-1 grid size-11 place-items-center rounded-[var(--radius-control)] text-text transition-colors hover:bg-surface-2"
         >
           <Menu className="size-5" strokeWidth={2} />
         </button>
@@ -113,7 +113,7 @@ export function AppShell({
               type="button"
               onClick={() => setOpen(false)}
               aria-label="Fechar menu"
-              className="absolute right-3 top-3.5 grid size-9 place-items-center rounded-[var(--radius-control)] text-muted hover:bg-surface-2 hover:text-text"
+              className="absolute right-2.5 top-2.5 grid size-11 place-items-center rounded-[var(--radius-control)] text-muted transition-colors hover:bg-surface-2 hover:text-text"
             >
               <X className="size-5" strokeWidth={2} />
             </button>
@@ -190,7 +190,7 @@ function SidebarContent({
           <form action="/auth/signout" method="post">
             <button
               type="submit"
-              className="inline-flex h-9 items-center gap-2 rounded-[var(--radius-control)] px-3 text-meta font-semibold text-muted transition-colors hover:bg-surface-2 hover:text-text"
+              className="inline-flex h-10 items-center gap-2 rounded-[var(--radius-control)] px-3 text-meta font-semibold text-muted transition-colors hover:bg-surface-2 hover:text-text"
             >
               <LogOut className="size-4" strokeWidth={2} />
               Sair
@@ -229,8 +229,11 @@ function NavItem({
         title={title}
         aria-current={active ? "page" : undefined}
         className={cn(
-          "flex h-9 items-center gap-2.5 rounded-[var(--radius-control)] px-3 transition-colors [&_svg]:size-4 [&_svg]:shrink-0",
-          active ? "bg-surface-2 font-semibold text-text" : muted ? "text-muted hover:bg-surface-2 hover:text-text" : "text-text/85 hover:bg-surface-2 hover:text-text",
+          "flex h-10 items-center gap-2.5 rounded-[var(--radius-control)] px-3 transition-colors [&_svg]:size-4 [&_svg]:shrink-0",
+          // Traço do ícone acompanha o peso do texto: 2px no ativo (semibold), 1.75px nos demais (regular).
+          active
+            ? "bg-surface-2 font-semibold text-text [&_svg.lucide]:stroke-2"
+            : cn("hover:bg-surface-2 hover:text-text [&_svg.lucide]:stroke-[1.75]", muted ? "text-muted" : "text-text/85"),
         )}
       >
         <span className={cn("grid place-items-center", !active && "text-muted")}>{icon}</span>
