@@ -3,11 +3,13 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
-import { LayoutGrid, LogOut, Menu, Plus, Upload, X } from "lucide-react";
+import { LayoutGrid, LogOut, Menu, Plus, Search, Upload, X } from "lucide-react";
+import { CommandPalette, useOpenShortcutLabel } from "@/components/command-palette";
 import { Logo } from "@/components/logo";
 import { PlatformIcon } from "@/components/platform-icon";
 import { StorageUsage } from "@/components/storage-usage";
 import { ThemeToggle } from "@/components/theme-toggle";
+import { Kbd } from "@/components/ui/kbd";
 import { PLATFORM_LABEL, type Platform } from "@/lib/constants";
 import { cn } from "@/lib/utils";
 
@@ -66,6 +68,7 @@ export function AppShell({
   const pathname = usePathname();
   const active = activeOverride !== undefined ? activeOverride : activeFromPath(pathname);
   const [open, setOpen] = useState(false);
+  const [paletteOpen, setPaletteOpen] = useState(false);
 
   // A gaveta fecha ao clicar num link (onNavigate) e com Esc.
   useEffect(() => {
@@ -82,6 +85,10 @@ export function AppShell({
       routes={routes}
       active={active}
       onNavigate={() => setOpen(false)}
+      onSearch={() => {
+        setOpen(false);
+        setPaletteOpen(true);
+      }}
     />
   );
 
@@ -104,6 +111,14 @@ export function AppShell({
         <Link href={routes.home} aria-label="ViralLab, ir para contas">
           <Logo />
         </Link>
+        <button
+          type="button"
+          onClick={() => setPaletteOpen(true)}
+          aria-label="Buscar"
+          className="-mr-1 ml-auto grid size-11 place-items-center rounded-[var(--radius-control)] text-text transition-colors hover:bg-surface-2"
+        >
+          <Search className="size-5" strokeWidth={2} />
+        </button>
       </div>
       {open && (
         <div className="fixed inset-0 z-40 lg:hidden" role="dialog" aria-modal="true" aria-label="Menu">
@@ -122,6 +137,8 @@ export function AppShell({
         </div>
       )}
 
+      <CommandPalette open={paletteOpen} onOpenChange={setPaletteOpen} accounts={accounts} routes={routes} />
+
       <main className="min-w-0 px-4 pb-20 pt-8 sm:px-6 lg:px-10 lg:pt-10">
         <div className="mx-auto w-full max-w-6xl">{children}</div>
       </main>
@@ -135,19 +152,39 @@ function SidebarContent({
   routes,
   active,
   onNavigate,
+  onSearch,
 }: {
   accounts: ShellAccount[];
   usage: { bytes: number; files: number; limit: number; hardLimit: number };
   routes: ShellRoutes;
   active: ActiveKey;
   onNavigate: () => void;
+  onSearch: () => void;
 }) {
+  const shortcut = useOpenShortcutLabel();
   return (
     <div className="flex h-full flex-col">
       <div className="flex h-16 shrink-0 items-center px-5">
         <Link href={routes.home} onClick={onNavigate} aria-label="ViralLab, ir para contas" className="rounded-[var(--radius-control)]">
           <Logo priority />
         </Link>
+      </div>
+
+      <div className="px-3 pb-2">
+        <button
+          type="button"
+          onClick={onSearch}
+          aria-keyshortcuts="Control+K Meta+K"
+          className="flex h-10 w-full items-center gap-2.5 rounded-[var(--radius-control)] border border-border bg-surface-2 px-3 text-muted transition-colors hover:border-muted/40 hover:text-text"
+        >
+          <Search className="size-4 shrink-0" strokeWidth={1.75} />
+          <span className="flex-1 text-left">Buscar</span>
+          <span className="flex items-center gap-1" aria-hidden="true">
+            {shortcut.map((k) => (
+              <Kbd key={k}>{k}</Kbd>
+            ))}
+          </span>
+        </button>
       </div>
 
       <nav aria-label="Principal" className="flex min-h-0 flex-1 flex-col gap-6 overflow-y-auto px-3 pb-4 pt-2">
