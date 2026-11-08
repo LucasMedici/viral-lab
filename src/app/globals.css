@@ -104,6 +104,16 @@
   p {
     text-wrap: pretty; /* evita palavra órfã na última linha */
   }
+  /*
+   * Cor do contorno já em Ácido em repouso (ele só aparece no foco). Sem isso,
+   * `transition-colors` anima o outline a partir da cor do texto e, no tema
+   * claro, o anel "pisca" preto antes de ficar verde.
+   */
+  *,
+  ::before,
+  ::after {
+    outline-color: var(--accent);
+  }
   /* Foco de teclado visível: anel de 2px em Ácido */
   :focus-visible {
     outline: 2px solid var(--accent);
