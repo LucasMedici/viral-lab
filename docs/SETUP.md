@@ -11,7 +11,7 @@ Vá anotando os valores num bloco de notas temporário. Eles vão para dois luga
 | `R2_ACCOUNT_ID` | Cloudflare, passo 2.4 |
 | `R2_ACCESS_KEY_ID` | Cloudflare, passo 2.4 |
 | `R2_SECRET_ACCESS_KEY` | Cloudflare, passo 2.4 |
-| `R2_BUCKET` | `virallab` |
+| `R2_BUCKET` | `viral-lab` |
 | `R2_FREE_TIER_BYTES` | `10737418240` (10 GB) |
 | `R2_STORAGE_HARD_LIMIT_BYTES` | `9663676416` (9 GB, teto do app; opcional) |
 | `NEXT_PUBLIC_APP_TIMEZONE` | `America/Sao_Paulo` |
@@ -27,7 +27,7 @@ Vá anotando os valores num bloco de notas temporário. Eles vão para dois luga
 ## 1. Supabase (banco + login)
 
 1. Acesse <https://supabase.com/dashboard>, entre com o GitHub e clique em **New project**.
-   - **Name**: `virallab`
+   - **Name**: `viral-lab`
    - **Database password**: gere uma senha forte e **guarde** (usada no passo 1.6).
    - **Region**: `South America (São Paulo)`.
    - Plano **Free**. Clique em **Create new project** e espere ~2 min.
@@ -60,13 +60,13 @@ Vá anotando os valores num bloco de notas temporário. Eles vão para dois luga
    - Grátis por mês: **10 GB armazenados**, 1 milhão de operações Classe A (escrita/listagem) e 10 milhões Classe B (leitura). **Download (egress) é grátis.**
    - ⚠️ Passou disso, cobra (cerca de US$ 0,015 por GB-mês adicional). O indicador no topo do app e o hábito de apagar o arquivo após publicar mantêm você dentro do limite.
 3. **Create bucket**:
-   - **Bucket name**: `virallab`
+   - **Bucket name**: `viral-lab`
    - **Location**: Automatic. **Default storage class**: Standard.
    - Deixe o bucket **privado** (não ative "Public access" nem "r2.dev subdomain").
 4. **Chaves de API**: na página do R2, clique em **API › Manage API tokens › Create Account API token** (ou **Create User API token**).
    - **Token name**: `virallab`
    - **Permissions**: **Object Read & Write**
-   - **Specify bucket(s)**: **Apply to specific buckets only** → `virallab`
+   - **Specify bucket(s)**: **Apply to specific buckets only** → `viral-lab`
    - **TTL**: Forever. Clique em **Create API Token**.
    - Na tela seguinte (mostrada **uma única vez**) copie:
      - **Access Key ID** → `R2_ACCESS_KEY_ID`

@@ -38,7 +38,7 @@ if (missing.length) {
   process.exit(1);
 }
 
-const bucket = process.env.R2_BUCKET || "virallab";
+const bucket = process.env.R2_BUCKET || "viral-lab";
 const s3 = new S3Client({
   region: "auto",
   endpoint: `https://${process.env.R2_ACCOUNT_ID}.r2.cloudflarestorage.com`,

@@ -9,7 +9,7 @@ const serverSchema = z.object({
   R2_ACCOUNT_ID: z.string().min(1, "R2_ACCOUNT_ID não definido"),
   R2_ACCESS_KEY_ID: z.string().min(1, "R2_ACCESS_KEY_ID não definido"),
   R2_SECRET_ACCESS_KEY: z.string().min(1, "R2_SECRET_ACCESS_KEY não definido"),
-  R2_BUCKET: z.string().min(1).default("virallab"),
+  R2_BUCKET: z.string().min(1).default("viral-lab"),
   R2_FREE_TIER_BYTES: z.coerce.number().positive().default(10 * 1024 ** 3),
 });
 
