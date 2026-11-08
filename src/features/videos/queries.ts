@@ -1,6 +1,7 @@
 import "server-only";
 import { freeTierBytes, storageHardLimitBytes } from "@/lib/env";
 import { requireUser } from "@/lib/supabase/server";
+import { sumStoredBytes } from "./storage-limit";
 
 export async function getVideo(id: string) {
   const { supabase } = await requireUser();
@@ -73,12 +74,6 @@ export async function listUpcoming(limit = 6) {
 /** Uso do bucket estimado pelo banco (soma dos arquivos ainda não apagados). Custo zero. */
 export async function getStorageUsage() {
   const { supabase } = await requireUser();
-  const { data, error } = await supabase
-    .from("videos")
-    .select("file_size_bytes")
-    .is("file_deleted_at", null)
-    .not("file_key", "is", null);
-  if (error) throw new Error(error.message);
-  const bytes = data.reduce((sum, v) => sum + (v.file_size_bytes ?? 0), 0);
-  return { bytes, files: data.length, limit: freeTierBytes(), hardLimit: storageHardLimitBytes() };
+  const { bytes, files } = await sumStoredBytes(supabase);
+  return { bytes, files, limit: freeTierBytes(), hardLimit: storageHardLimitBytes() };
 }
