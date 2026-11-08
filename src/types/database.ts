@@ -1,6 +1,6 @@
 // Tipos do banco. Escritos à mão a partir de supabase/migrations; para regenerar
 // a partir do projeto real:
-//   npx supabase gen types typescript --project-id <ref> --schema public > src/types/database.ts
+//   npm run db:types   (usa o projeto ligado via `npx supabase link`)
 
 export type Json = string | number | boolean | null | { [key: string]: Json | undefined } | Json[];
 
