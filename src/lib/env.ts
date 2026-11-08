@@ -33,3 +33,13 @@ export function freeTierBytes(): number {
   const raw = Number(process.env.R2_FREE_TIER_BYTES);
   return Number.isFinite(raw) && raw > 0 ? raw : 10 * 1024 ** 3;
 }
+
+/**
+ * Teto rígido de armazenamento aplicado pelo próprio app (a Cloudflare não
+ * oferece limite rígido para o R2, só alertas por email). Novos envios que
+ * ultrapassem este valor são recusados. Padrão: 9 GB, abaixo dos 10 GB grátis.
+ */
+export function storageHardLimitBytes(): number {
+  const raw = Number(process.env.R2_STORAGE_HARD_LIMIT_BYTES);
+  return Number.isFinite(raw) && raw > 0 ? raw : 9 * 1024 ** 3;
+}

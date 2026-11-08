@@ -31,7 +31,16 @@ function putWithProgress(url: string, file: File, headers: Record<string, string
   });
 }
 
-export function UploadForm({ accounts, defaultAccountId }: { accounts: AccountOption[]; defaultAccountId?: string }) {
+export function UploadForm({
+  accounts,
+  defaultAccountId,
+  remainingBytes,
+}: {
+  accounts: AccountOption[];
+  defaultAccountId?: string;
+  /** Espaço que ainda cabe antes do teto do app (o servidor confere de novo). */
+  remainingBytes?: number;
+}) {
   const [accountId, setAccountId] = useState(defaultAccountId ?? (accounts.length === 1 ? accounts[0].id : ""));
   const [file, setFile] = useState<File | null>(null);
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
@@ -60,6 +69,13 @@ export function UploadForm({ accounts, defaultAccountId }: { accounts: AccountOp
     }
     if (!f.type.startsWith("video/")) {
       setUpload({ phase: "error", message: "Esse arquivo não é um vídeo." });
+      return;
+    }
+    if (remainingBytes !== undefined && f.size > remainingBytes) {
+      setUpload({
+        phase: "error",
+        message: `O arquivo tem ${formatBytes(f.size)} e só cabem ${formatBytes(remainingBytes)} até o limite de armazenamento do app. Apague arquivos de vídeos já publicados para liberar espaço`,
+      });
       return;
     }
     if (f.size > MAX_UPLOAD_BYTES) {
@@ -192,7 +208,7 @@ export function UploadForm({ accounts, defaultAccountId }: { accounts: AccountOp
             <UploadStatus upload={upload} onRetry={() => file && void startUpload(file)} />
           </div>
         )}
-        {upload.phase === "error" && !file && <p className="text-meta text-danger">{upload.message}</p>}
+        {upload.phase === "error" && !file && <p role="alert" className="text-meta text-danger">{upload.message.replace(/\.$/, "")}.</p>}
         {selected && (
           <p className="flex items-center gap-1.5 text-meta text-muted">
             <PlatformIcon platform={selected.platform} className="size-3.5" /> {selected.display_name}
@@ -236,7 +252,7 @@ function UploadStatus({ upload, onRetry }: { upload: Upload; onRetry: () => void
   if (upload.phase === "error") {
     return (
       <p role="alert" className="text-meta text-danger">
-        {upload.message}.{" "}
+        {upload.message.replace(/\.$/, "")}.{" "}
         <button type="button" onClick={onRetry} className="font-semibold underline underline-offset-4">Tentar de novo</button>
       </p>
     );

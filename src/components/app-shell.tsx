@@ -58,7 +58,7 @@ export function AppShell({
   children,
 }: {
   accounts: ShellAccount[];
-  usage: { bytes: number; files: number; limit: number };
+  usage: { bytes: number; files: number; limit: number; hardLimit: number };
   routes?: ShellRoutes;
   active?: ActiveKey;
   children: React.ReactNode;
@@ -137,7 +137,7 @@ function SidebarContent({
   onNavigate,
 }: {
   accounts: ShellAccount[];
-  usage: { bytes: number; files: number; limit: number };
+  usage: { bytes: number; files: number; limit: number; hardLimit: number };
   routes: ShellRoutes;
   active: ActiveKey;
   onNavigate: () => void;
@@ -184,7 +184,7 @@ function SidebarContent({
       </nav>
 
       <div className="flex shrink-0 flex-col gap-2 border-t border-border p-3">
-        <StorageUsage bytes={usage.bytes} files={usage.files} limit={usage.limit} />
+        <StorageUsage bytes={usage.bytes} files={usage.files} limit={usage.limit} hardLimit={usage.hardLimit} />
         <div className="flex items-center justify-between gap-2 px-1">
           <ThemeToggle />
           <form action="/auth/signout" method="post">

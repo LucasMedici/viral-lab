@@ -13,6 +13,7 @@ Vá anotando os valores num bloco de notas temporário. Eles vão para dois luga
 | `R2_SECRET_ACCESS_KEY` | Cloudflare, passo 2.4 |
 | `R2_BUCKET` | `virallab` |
 | `R2_FREE_TIER_BYTES` | `10737418240` (10 GB) |
+| `R2_STORAGE_HARD_LIMIT_BYTES` | `9663676416` (9 GB, teto do app; opcional) |
 | `NEXT_PUBLIC_APP_TIMEZONE` | `America/Sao_Paulo` |
 | `R2_CORS_ORIGINS` | só local: `http://localhost:3000,https://virallab.vercel.app` |
 
@@ -86,7 +87,10 @@ Vá anotando os valores num bloco de notas temporário. Eles vão para dois luga
    ```
 
    Alternativa: `npm run r2:cors` aplica a mesma política via API usando o `.env.local` (exige um token com permissão **Admin Read & Write**; com o token "Object Read & Write" ele só imprime o JSON para você colar).
-6. (Opcional, recomendado) **Manage Account › Billing › Notifications**: crie um alerta de uso/cobrança para ser avisado se algo sair do gratuito.
+6. **Alertas por email (recomendado).** A Cloudflare **não tem limite rígido** para o R2, só alertas, que avisam mas não bloqueiam o uso:
+   - **Manage Account › Billing › Billable Usage › Create budget alert**: crie um alerta de **US$ 0,01** (avisa na primeira cobrança) e outro de **US$ 1**. Disponível para contas Pay-as-you-go, ou seja, depois de ativar o R2. Os dados de uso atualizam uma vez por dia.
+   - Opcional: em **Notifications › Add**, veja se há alerta de uso específico do R2 (por armazenamento ou operações).
+7. **Teto no próprio app.** Além dos alertas, o ViralLab recusa envios que passariam de `R2_STORAGE_HARD_LIMIT_BYTES` (padrão 9 GB, abaixo dos 10 GB grátis). Isso funciona como limite rígido porque só o app tem o token de escrita no bucket.
 
 ## 3. Rodar localmente
 

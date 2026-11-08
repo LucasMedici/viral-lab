@@ -1,5 +1,5 @@
 import "server-only";
-import { freeTierBytes } from "@/lib/env";
+import { freeTierBytes, storageHardLimitBytes } from "@/lib/env";
 import { requireUser } from "@/lib/supabase/server";
 
 export async function getVideo(id: string) {
@@ -80,5 +80,5 @@ export async function getStorageUsage() {
     .not("file_key", "is", null);
   if (error) throw new Error(error.message);
   const bytes = data.reduce((sum, v) => sum + (v.file_size_bytes ?? 0), 0);
-  return { bytes, files: data.length, limit: freeTierBytes() };
+  return { bytes, files: data.length, limit: freeTierBytes(), hardLimit: storageHardLimitBytes() };
 }
