@@ -4,12 +4,10 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { fieldErrorsFrom, type ActionResult } from "@/lib/action-result";
 import { fromDateTimeLocal } from "@/lib/dates";
-import { storageHardLimitBytes } from "@/lib/env";
 import { storage, videoObjectKey } from "@/lib/storage";
-import { formatBytes } from "@/lib/utils";
 import { requireUser } from "@/lib/supabase/server";
 import type { Database } from "@/types/database";
-import { getStorageUsage } from "./queries";
+import { checkStorageLimit } from "./storage-limit";
 import { uploadRequestSchema, videoFieldsSchema, videoUpdateSchema, type UploadRequest } from "./schema";
 
 function fieldsFromForm(formData: FormData) {
@@ -21,25 +19,6 @@ function fieldsFromForm(formData: FormData) {
     scheduled_at: formData.get("scheduled_at") ?? "",
     notes: formData.get("notes") ?? "",
   };
-}
-
-/**
- * Recusa o envio se o uso atual + o novo arquivo passar do teto do app.
- * Usa o maior valor entre o banco e a listagem real do bucket, para contar
- * também arquivos que subiram mas não viraram vídeo (1 operação Classe A).
- */
-async function checkStorageLimit(newFileBytes: number): Promise<string | null> {
-  const hardLimit = storageHardLimitBytes();
-  const db = await getStorageUsage();
-  let used = db.bytes;
-  try {
-    used = Math.max(used, (await storage.getBucketUsage()).bytes);
-  } catch (e) {
-    console.error("Não foi possível listar o bucket; usando o valor do banco.", e);
-  }
-  if (used + newFileBytes <= hardLimit) return null;
-  const free = Math.max(hardLimit - used, 0);
-  return `Limite de armazenamento do app atingido: ${formatBytes(used)} de ${formatBytes(hardLimit)} em uso e este arquivo tem ${formatBytes(newFileBytes)} (cabem ${formatBytes(free)}). Apague os arquivos de vídeos já publicados para liberar espaço`;
 }
 
 /** 1º passo do upload: gera a URL assinada para o navegador enviar o arquivo direto ao R2. */
@@ -55,7 +34,7 @@ export async function requestUploadUrl(
   if (!account) return { ok: false, error: "Conta não encontrada" };
 
   // Teto rígido do app: confere o uso antes de liberar o envio.
-  const limitError = await checkStorageLimit(parsed.data.size);
+  const limitError = await checkStorageLimit(supabase, parsed.data.size);
   if (limitError) return { ok: false, error: limitError };
 
   const key = videoObjectKey(account.id, parsed.data.fileName);
