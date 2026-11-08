@@ -8,6 +8,7 @@ import { storageHardLimitBytes } from "@/lib/env";
 import { storage, videoObjectKey } from "@/lib/storage";
 import { formatBytes } from "@/lib/utils";
 import { requireUser } from "@/lib/supabase/server";
+import type { Database } from "@/types/database";
 import { getStorageUsage } from "./queries";
 import { uploadRequestSchema, videoFieldsSchema, videoUpdateSchema, type UploadRequest } from "./schema";
 
@@ -248,4 +249,29 @@ export async function discardUpload(key: string): Promise<ActionResult> {
   if (used) return { ok: true };
   await storage.deleteObject(key).catch(() => {});
   return { ok: true };
+}
+
+export type VideoSearchResult = {
+  id: string;
+  title: string;
+  status: Database["public"]["Enums"]["video_status"];
+  account: { display_name: string; username: string; platform: Database["public"]["Enums"]["platform"] } | null;
+};
+
+/** Busca vídeos pelo título (usada na paleta de comandos, Ctrl+K). */
+export async function searchVideos(query: string): Promise<ActionResult<VideoSearchResult[]>> {
+  const { supabase } = await requireUser();
+  const q = String(query ?? "").trim().slice(0, 80);
+  if (q.length < 2) return { ok: true, data: [] };
+
+  // Escapa os coringas do LIKE para buscar o texto literalmente.
+  const pattern = `%${q.replace(/[\\%_]/g, (c) => `\\${c}`)}%`;
+  const { data, error } = await supabase
+    .from("videos")
+    .select("id, title, status, account:accounts(display_name, username, platform)")
+    .ilike("title", pattern)
+    .order("updated_at", { ascending: false })
+    .limit(8);
+  if (error) return { ok: false, error: "Não foi possível buscar os vídeos." };
+  return { ok: true, data: data as VideoSearchResult[] };
 }
