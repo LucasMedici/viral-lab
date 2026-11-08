@@ -42,3 +42,7 @@ next-env.d.ts
 
 # exemplo de variáveis (sem segredos) é versionado
 !.env.example
+
+# documentação interna (fica só local)
+/docs/
+/AGENTS.md
