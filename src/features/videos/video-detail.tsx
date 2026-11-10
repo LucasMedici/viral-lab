@@ -3,6 +3,7 @@
 import { useActionState, useEffect, useRef, useState, useTransition } from "react";
 import { Check, Copy, Download, ExternalLink, FileX2, Trash2 } from "lucide-react";
 import { toast } from "sonner";
+import { ICON_IN, ICON_OUT, ICON_SWAP } from "@/components/ui/icon-swap";
 import { Button } from "@/components/ui/button";
 import { Dialog } from "@/components/ui/dialog";
 import { Field, Input } from "@/components/ui/field";
@@ -11,11 +12,6 @@ import type { VideoStatus } from "@/lib/constants";
 import { cn, formatBytes } from "@/lib/utils";
 import { deleteVideo, deleteVideoFile, getDownloadUrl, updateVideo } from "./actions";
 import { VideoFields } from "./video-fields";
-
-// Troca contextual de ícone (os dois ficam no DOM e fazem cross-fade).
-const ICON_SWAP = "transition-[opacity,scale,filter] duration-300 ease-[cubic-bezier(0.2,0,0,1)] motion-reduce:transition-none";
-const ICON_IN = "scale-100 opacity-100 blur-[0px]";
-const ICON_OUT = "scale-[0.25] opacity-0 blur-[4px]";
 
 type DetailVideo = {
   id: string;
