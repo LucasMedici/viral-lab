@@ -9,6 +9,11 @@
 
 ViralLab organiza a operação de quem produz vídeos curtos em escala: várias contas de TikTok, YouTube e Instagram, um calendário único de publicação e os arquivos de vídeo no mesmo lugar.
 
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="public/readme/calendario-dark.png">
+  <img src="public/readme/calendario-light.png" alt="Calendário de uma conta no ViralLab: mês de novembro com dois vídeos agendados por dia, às 12h e às 19h">
+</picture>
+
 ## O que ele faz
 
 - Reúne as contas de TikTok, YouTube e Instagram numa tela, com o nicho e os vídeos pendentes de cada uma
